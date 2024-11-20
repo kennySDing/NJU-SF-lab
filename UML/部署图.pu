@@ -1,0 +1,35 @@
+@startuml
+
+node "用户设备" as UserDevice {
+    component "天气App (iOS/Android)" as MobileApp
+}
+
+node "APP服务器" as AppServer {
+    component "API" as APIService
+    component "内部逻辑组件" as BusinessLogic
+}
+
+' 定义数据库服务器
+
+node "数据库服务器" as DatabaseServer {
+    component "LocalDB" as LocalDB
+}
+
+' 定义外部服务
+node "外部服务器（提供天气信息）" as OuterServer {
+    component "WeatherAPI" as WeatherAPI
+}
+
+node "CI/CD服务器" as CI_CD 
+
+MobileApp --> AppServer : HTTP/HTTPS请求
+APIService --> BusinessLogic : 调用
+BusinessLogic --> LocalDB : 查询/更新
+BusinessLogic --> WeatherAPI : 查询天气信息
+AppServer --> UserDevice : HTTP/HTTPS响应
+OuterServer --> AppServer : 回应
+DatabaseServer --> BusinessLogic : 回应
+CI_CD --> UserDevice : 部署
+CI_CD --> AppServer : 部署
+CI_CD --> DatabaseServer : 部署
+@enduml

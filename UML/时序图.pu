@@ -1,0 +1,53 @@
+@startuml
+
+actor 用户 as User
+participant "天气App主页" as MobileApp
+participant "天气服务" as WeatherService
+participant "外部服务器（获取天气）" as WeatherAPI
+participant "本地数据库" as LocalDB
+participant "设置" as ThemeManager
+participant "出行建议管理器" as TravelAdviceManager
+
+== 应用启动 ==
+User -> MobileApp: 打开天气App
+
+MobileApp -> ThemeManager: 加载用户设置
+ThemeManager --> MobileApp: 应用主题 (夜间/日间)
+
+MobileApp -> LocalDB: 获取收藏城市列表
+LocalDB --> MobileApp: 返回收藏城市
+
+MobileApp -> WeatherService: 根据用户定位获取当前天气数据
+WeatherService -> LocalDB: 检查缓存的天气数据
+alt 缓存存在且有效
+    LocalDB --> WeatherService: 返回缓存数据
+else 缓存不存在或过期
+    WeatherService -> WeatherAPI: 请求当前天气数据
+    WeatherAPI --> WeatherService: 返回当前天气数据
+    WeatherService -> LocalDB: 缓存当前天气数据
+end
+WeatherService --> MobileApp: 返回当前天气数据
+
+
+MobileApp -> TravelAdviceManager: 生成出行建议
+TravelAdviceManager -> WeatherService: 获取最新天气数据
+WeatherService --> TravelAdviceManager: 返回天气数据
+TravelAdviceManager -> TravelAdviceManager: 根据天气数据生成建议
+TravelAdviceManager --> MobileApp: 返回出行建议
+
+
+MobileApp -> User: 显示当前主题下天气数据和出行建议
+
+== 用户交互 ==
+User -> MobileApp: 切换到另一个城市
+MobileApp -> WeatherService: 获取该城市当前天气数据
+WeatherService -> MobileApp: 返回该城市当前天气数据
+
+== 切换主题 ==
+User -> MobileApp: 切换到设置界面
+MobileApp -> ThemeManager: 更新主题设置
+ThemeManager --> MobileApp: 应用新主题
+MobileApp -> LocalDB: 保存设置
+LocalDB --> MobileApp: 设置保存成功
+
+@enduml

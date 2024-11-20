@@ -1,0 +1,89 @@
+@startuml
+
+class WeatherData {
+    - temperature: Double
+    - humidity: Double
+    - windDirection: String
+    - windSpeed: String
+    - ProbabilityOfRain: int
+    - pollutionLevel: Duuble
+    - visibility: Double
+    - timestamp: DateTime
+    + readWeatherData()
+}
+
+class Location {
+    - CityName: String
+    - latitude: Double
+    - longitude: Double
+    - weatherForecast: WeatherForecast
+}
+
+class User {
+    - Id: String
+    - password: String
+    - settings: Settings
+    - currentLocation: Location
+    - favoriteLocations: Location[]
+    + register()
+    + login()   
+    + changePassword()
+    + addFavoriteLocation(location: Location)
+    + removeLocation(location: Location)
+    + updateSettings(settings: Settings)
+}
+
+class WeatherForecast {
+    - weatherData: WeatherData[]
+    + getWeatherDataByDay(): WeatherData[]
+    + getWeatherDataByHour(): WeatherData[]
+}
+
+class Settings {
+    - NightMode: Boolean
+}
+
+class Reminder{
+    - timestamp: DateTime
+    - message: String
+    - location: Location
+    + setReminderByWehater(WeatherData : data)
+    + setReminderByTime(DateTime : time)
+    + removeReminder()
+}
+
+class MainScreen{
+    - currentLocation: Location
+    - weatherForecast: WeatherForecast
+    - reminders: Reminder[]
+    + showWeatherForecast()
+    + showReminders()
+    + showSettings()
+    + showFavoriteLocations()
+    + SwitchCurrentLocation()
+    + SwitchNightMode()
+    + SwitchTheme()
+}
+
+class Theme{
+    - color: String
+    - image: String
+    - size: int
+    + changeColor()
+    + changeImage()
+    + changeSize()
+}
+
+' 定义类之间的关系
+User "1" --> "*" Location : favorites
+User "1" --> "1" Settings : set
+User "1" --> "1" Reminder : set
+Settings "1" --> "1" Theme: set
+Location --> WeatherForecast : uses
+WeatherForecast --> WeatherData: uses
+MainScreen --> Location : display
+MainScreen --> WeatherForecast : display
+MainScreen --> Reminder : display
+
+
+@enduml
