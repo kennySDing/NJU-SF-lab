@@ -25,13 +25,13 @@ class MainScreen:
         self.Images = []
 
         self.weather_photo ={}
-        self.weather_photo["晴"] = "code/pic/sun.png"
-        self.weather_photo["多云"] = "code/pic/cloud.png"
-        self.weather_photo["阴"] = "code/pic/cloudy.png"
-        self.weather_photo["小雨"] = "code/pic/little_rain.png"
-        self.weather_photo["中雨"] = "code/pic/mid_rain.png"
-        self.weather_photo["暴雨"] = "code/pic/big_rain.png"
-        self.weather_photo["雷阵雨"] = "code/pic/thunder.png"
+        self.weather_photo["晴"] = "pic/sun.png"
+        self.weather_photo["多云"] = "pic/cloud.png"
+        self.weather_photo["阴"] = "pic/cloudy.png"
+        self.weather_photo["小雨"] = "pic/little_rain.png"
+        self.weather_photo["中雨"] = "pic/mid_rain.png"
+        self.weather_photo["暴雨"] = "pic/big_rain.png"
+        self.weather_photo["雷阵雨"] = "pic/thunder.png"
 
         self.cur_screen = "Login"
 
@@ -40,11 +40,11 @@ class MainScreen:
         self.word_color[False] = "black"
 
         self.bg_color ={}
-        self.bg_color[True] = "code/pic/night.jpg"
-        self.bg_color[False] = "code/pic/sky.png"
+        self.bg_color[True] = "pic/night.jpg"
+        self.bg_color[False] = "pic/sky.png"
 
         #加载城市列表
-        self.city_list = self.load_cities("code/city/chinese_cities.json")
+        self.city_list = self.load_cities("city/chinese_cities.json")
         # 显示登录界面
         self.show_login()
 
@@ -97,7 +97,7 @@ class MainScreen:
         self.cur_screen = "Login"
         # 清空 Canvas
         self.canvas.delete("all")
-        self.show_picture("code/pic/sky.png", 400, 600, 0, 0)
+        self.show_picture("pic/sky.png", 400, 600, 0, 0)
         
         
         self.canvas.create_text(200, 80, text="欢迎使用天气应用", font=("微软雅黑", 20), fill="black")
@@ -124,7 +124,7 @@ class MainScreen:
         self.cur_screen = "Register"
         # 清空 Canvas
         self.canvas.delete("all")
-        self.show_picture("code/pic/sky.png", 400, 600, 0, 0)
+        self.show_picture("pic/sky.png", 400, 600, 0, 0)
         
         self.canvas.create_text(200, 80, text="注册", font=("微软雅黑", 20), fill="black")
         
@@ -153,8 +153,8 @@ class MainScreen:
         # 清空 Canvas
         self.canvas.delete("all")
         self.show_picture(self.bg_color[self.current_user.settings.night_mode], 400, 600, 0, 0)
-        self.show_picture("code/pic/rectangle.png", 390, 130, 5, 180)
-        self.show_picture("code/pic/rectangle.png", 390, 170, 5, 325)
+        self.show_picture("pic/rectangle.png", 390, 130, 5, 180)
+        self.show_picture("pic/rectangle.png", 390, 170, 5, 325)
         cur_location = "当前位置"
         self.canvas.create_text(200, 20, text=cur_location, font=("微软雅黑", 10, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
@@ -216,7 +216,7 @@ class MainScreen:
             self.canvas.create_text(280, 350+40*i, text=str(low_temp)+"°"+"————"+
                                     str(high_temp)+"°", font=("微软雅黑", 12), fill=self.word_color[self.current_user.settings.night_mode])
             if (i != 0):
-                self.show_picture("code/pic/line_white.png", 370, 2, 15, 330+40*i)
+                self.show_picture("pic/line_white.png", 370, 2, 15, 330+40*i)
         
 
         #获取一天内的天气预报
@@ -264,7 +264,7 @@ class MainScreen:
         for i in range(24):
             reminder.set_reminder_by_weather(city.weather_forecast.weather_data_hour[i])
             if reminder.message:
-                self.show_picture("code/pic/white_rec.png", 390, 100, 5, 520)
+                self.show_picture("pic/white_rec.png", 390, 100, 5, 520)
                 self.canvas.create_text(200, 550, text=reminder.message, font=("微软雅黑", 14,"bold"), fill="black")
                 break
         
@@ -440,7 +440,7 @@ class MainScreen:
 
         self.canvas.delete("all")
         self.show_picture(self.bg_color[self.current_user.settings.night_mode], 400, 600, 0, 0)
-        self.show_picture("code/pic/rectangle.png", 390, 100, 5, 98)
+        self.show_picture("pic/rectangle.png", 390, 100, 5, 98)
         self.canvas.create_text(60, 80, text="今日天气", font=("微软雅黑", 16, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
         city = self.current_user.current_location
@@ -459,25 +459,25 @@ class MainScreen:
         
         #细节天气
         #AQI
-        self.show_picture("code/pic/rec_aqi.png", 200, 80, 5, 210)
-        self.show_picture("code/pic/aqi.png", 30, 30, 20, 220)
+        self.show_picture("pic/rec_aqi.png", 200, 80, 5, 210)
+        self.show_picture("pic/aqi.png", 30, 30, 20, 220)
         self.canvas.create_text(85, 235, text="  ：AQI", font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         aqi = city.weather_forecast.weather_data_hour[0].pollution_level
         self.canvas.create_text(90, 260, text="当前空气质量指数：" + 
                                 str(aqi), font=("微软雅黑", 10, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
         #风力和风速
-        self.show_picture("code/pic/rec_wind.png", 160, 80, 230, 210)
+        self.show_picture("pic/rec_wind.png", 160, 80, 230, 210)
         wind_direaction = city.weather_forecast.weather_data_hour[0].wind_direction
         wind_speed = city.weather_forecast.weather_data_hour[0].wind_speed
-        self.show_picture("code/pic/direction.png", 30, 30, 250, 220)
+        self.show_picture("pic/direction.png", 30, 30, 250, 220)
         self.canvas.create_text(305, 235, text=" ："+wind_direaction, font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         wind_level = city.weather_forecast.judge_windSPeed(wind_speed)
         self.canvas.create_text(305, 260, text = wind_level + "  "+wind_speed, font=("微软雅黑", 10, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
 
         #能见度
-        self.show_picture("code/pic/rec_wind.png", 170, 80, 5, 305)
+        self.show_picture("pic/rec_wind.png", 170, 80, 5, 305)
         visibility = city.weather_forecast.weather_data_hour[0].visibility
         vis_level = city.weather_forecast.judge_visibility(visibility)
         self.canvas.create_text(45, 325, text="能见度:", font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
@@ -487,18 +487,18 @@ class MainScreen:
 
 
         #湿度
-        self.show_picture("code/pic/rec_wind.png", 210, 80, 180, 305)
+        self.show_picture("pic/rec_wind.png", 210, 80, 180, 305)
         humidity = city.weather_forecast.weather_data_hour[0].humidity
         self.canvas.create_text(235, 325, text="湿度:", font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         self.canvas.create_text(290, 355, text=str(humidity)+"%", font=("微软雅黑", 20, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
         
         #降雨概率
-        self.show_picture("code/pic/rec_wind.png", 260, 80, 5, 390)
+        self.show_picture("pic/rec_wind.png", 260, 80, 5, 390)
         rain = city.weather_forecast.weather_data_hour[0].probability_of_rain
         self.canvas.create_text(50, 415, text="降雨概率:", font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         self.canvas.create_text(100, 445, text=str(rain)+"%", font=("微软雅黑", 20, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
-        self.show_picture("code/pic/rain.png", 50, 50, 150, 410)
+        self.show_picture("pic/rain.png", 50, 50, 150, 410)
 
         #返回
         self.back_button = tk.Button(self.window, text="返回", command=self.show_main_screen)
@@ -509,7 +509,7 @@ class MainScreen:
 
         self.canvas.delete("all")
         self.show_picture(self.bg_color[self.current_user.settings.night_mode], 400, 600, 0, 0)
-        self.show_picture("code/pic/rec_dayforecast.png", 380, 490, 10, 65)
+        self.show_picture("pic/rec_dayforecast.png", 380, 490, 10, 65)
         self.canvas.create_text(100, 50, text="两周内天气预报", font=("微软雅黑", 14, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
         
         city = self.current_user.current_location
@@ -530,7 +530,7 @@ class MainScreen:
             self.canvas.create_text(280, 90+40*i, text=str(low_temp)+"°"+"————"+
                                     str(high_temp)+"°", font=("微软雅黑", 12), fill=self.word_color[self.current_user.settings.night_mode])
             if (i != 0):
-                self.show_picture("code/pic/line.png", 370, 2, 15, 70+40*i)
+                self.show_picture("pic/line.png", 370, 2, 15, 70+40*i)
         self.back_button = tk.Button(self.window, text="返回", command=self.show_main_screen)
         self.canvas.create_window(350, 50, window=self.back_button, width=100, height=30)
 
@@ -540,9 +540,9 @@ class MainScreen:
         self.canvas.delete("all")
         self.show_picture(self.bg_color[self.current_user.settings.night_mode], 400, 600, 0, 0)
         self.canvas.create_text(50, 80, text="设置", font=("微软雅黑", 20, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
-        self.show_picture("code/pic/line_white.png", 380, 2, 10, 105)
+        self.show_picture("pic/line_white.png", 380, 2, 10, 105)
         self.canvas.create_text(65, 130, text="夜间模式", font=("微软雅黑", 12, "bold"), fill=self.word_color[self.current_user.settings.night_mode])
-        self.show_picture("code/pic/line_white.png", 380, 2, 10, 150)
+        self.show_picture("pic/line_white.png", 380, 2, 10, 150)
 
         self.is_on = tk.BooleanVar(value=self.current_user.settings.night_mode) # 夜间模式开关状态
         self.bg = self.canvas.create_oval(330, 120, 350, 140, fill="white", outline="")
